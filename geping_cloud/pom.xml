@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.4.5.RELEASE</version>
+</parent>
+  
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.geping</groupId>
+  <artifactId>geping_cloud</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  
+  <properties>
+     <docker.image.prefix>geping_cloud</docker.image.prefix>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-dependencies</artifactId>
+            <version>Camden.SR7</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+
+  <modules>
+    <module>../geping_cloud_gateway</module>
+    <module>../geping_cloud_config_server</module>
+    <module>../geping_cloud_eureka_server</module>
+  </modules>
+  
+    <repositories>
+		<repository>
+			<id>myRepository</id>
+			<name>myRepository</name>
+			<url>http://localhost:8081/repository/maven-public/</url>
+			<releases>
+				<updatePolicy>daily</updatePolicy>
+				<enabled>true</enabled>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+	
+	<build>
+	   <plugins>
+	   
+	       <plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			
+			<!--  -->
+			<plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+			
+	   </plugins>
+	</build>
+	
+		
+	<distributionManagement>
+        <repository>
+            <id>myRepository</id>
+            <name>Releases</name>
+            <url>http://localhost:8081/repository/maven-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>myRepository</id>
+            <name>Snapshot</name>
+            <url>http://localhost:8081/repository/maven-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+ 
+</project>
